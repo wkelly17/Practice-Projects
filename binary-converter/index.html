@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Binary Converter</title>
+    <link rel="stylesheet" href="./CSS/styles.css" />
+  </head>
+  <style>
+    .container {
+      width: 90%;
+      max-width: 1000px;
+      margin: 0 auto;
+      border: solid blue 1px;
+    }
+
+    #binary {
+      display: inline-block;
+      width: 150px;
+      margin-right: 0.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .result {
+      display: inline-block;
+      border: solid green 1px;
+      width: 150px;
+      height: 1.25rem;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Binary converter</h1>
+      <input type="text" name="binary" id="binary" />Input binary (Not you can
+      only input 1's and 0's without spaces)
+      <div class="output-box">
+        <span class="result"> </span> <span> Output</span>
+      </div>
+    </div>
+
+    <script>
+      let binNum = document.querySelector('#binary');
+      const result = document.querySelector('.result');
+
+      function convert() {
+        console.log({ binNum });
+        if (binNum.value.match(/[^1|0]/gi)) {
+          return window.alert("binary must be only 1's or 0's");
+        }
+        let converted = parseInt(binNum.value, 2); //parse int parses string and returns specified radix.
+        console.log({ converted });
+        result.textContent = converted;
+      }
+
+      binNum.addEventListener('keyup', convert);
+    </script>
+  </body>
+</html>

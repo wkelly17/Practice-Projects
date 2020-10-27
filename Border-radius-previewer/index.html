@@ -1,0 +1,164 @@
+<!-- Goal:  https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Border-Radius-Previewer.md
+User stories - 
+ - User can see a box which has a border-radius property applied to it
+  - User can change the 4 border-radius values that are applied to the box (top-left, top-right, bottom-left, bottom-right)
+  - User can copy the resulting CSS to the clipboard 
+-->
+<!--@ Current version completed October 22, 2020 -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Border Radius Previewer</title>
+    <link rel="stylesheet" href="./CSS/styles.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Border-radius previewer</h1>
+      <div class="checkbox-container">
+        <input type="checkbox" name="all-corners" class="all-corners" checked />
+        Apply changes to all 4 corners
+      </div>
+      <div class="border-preview-box">
+        <div class="input-box top tl">
+          <input type="number" class="border-input itl" /><span>px</span>
+        </div>
+        <div class="input-box top tr">
+          <input type="number" class="border-input itr" /><span>px</span>
+        </div>
+        <div class="input-box bottom bl">
+          <input type="number" class="border-input ibl" /><span>px</span>
+        </div>
+        <div class="input-box bottom br">
+          <input type="number" class="border-input ibr" /><span>px</span>
+        </div>
+
+        <div class="css-output">Output</div>
+        <button class="clipboard">Copy to clipboard</button>
+      </div>
+    </div>
+
+    <!-- @# ===============  Styles  =============   -->
+    <style>
+      h1 {
+        text-align: center;
+      }
+      .border-preview-box {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        margin: 50px auto 0;
+        border: solid blue 1px;
+        border-radius: 0px;
+      }
+      .css-output {
+        padding: 1rem;
+        text-align: center;
+        margin-top: 2rem;
+      }
+      .input-box {
+        position: absolute;
+        display: inline-block;
+      }
+      .border-input {
+        width: 45px;
+      }
+
+      .bottom {
+        bottom: -40px;
+      }
+      .top {
+        top: -40px;
+      }
+      .tl {
+        left: 0;
+      }
+      .tr {
+        right: 0;
+      }
+      .bl {
+        left: 0px;
+      }
+      .br {
+        right: 0px;
+      }
+      .checkbox-container {
+        text-align: center;
+        top: -30px;
+        left: 40%;
+      }
+
+      button {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+
+    <script>
+      let preview = document.querySelector('.border-preview-box');
+      const cssText = document.querySelector('.css-output');
+      const inputs = document.querySelectorAll('.border-input');
+      const checkAll = document.querySelector('.all-corners');
+      const clipboard = document.querySelector('.clipboard');
+
+      function changeBorder(event) {
+        // console.log(event)
+        event.stopPropagation(); //stop bubbling up to div
+
+        //dynamic values
+        let itl = document.querySelector('.itl').value;
+        console.log(itl);
+        let itr = document.querySelector('.itr').value;
+        let ibl = document.querySelector('.ibl').value;
+        let ibr = document.querySelector('.ibr').value;
+
+        //Handling all at once
+        if (checkAll.checked) {
+          preview.style.borderRadius = `${this.value}px`;
+          inputs.forEach((input) => (input.value = this.value));
+          cssText.textContent = `border-radius: ${preview.style.borderRadius}`;
+          console.log(preview.style.borderRadius);
+          return;
+        }
+        //#handling individual corners
+        if (this.classList.contains('itl')) {
+          preview.style.borderTopLeftRadius = `${this.value}px`;
+          cssText.textContent = `border-radius: ${itl}px, ${itr}px, ${ibl}px, ${ibr}px`;
+        } else if (this.classList.contains('itr')) {
+          preview.style.borderTopRightRadius = `${this.value}px`;
+          cssText.textContent = `border-radius: ${itl}px, ${itr}px, ${ibl}px, ${ibr}px`;
+        } else if (this.classList.contains('ibl')) {
+          preview.style.borderBottomLeftRadius = `${this.value}px`;
+          cssText.textContent = `border-radius: ${itl}px, ${itr}px, ${ibl}px, ${ibr}px`;
+        } else if (this.classList.contains('ibr')) {
+          preview.style.borderBottomRightRadius = `${this.value}px`;
+          cssText.textContent = `border-radius: ${itl}px, ${itr}px, ${ibl}px, ${ibr}px`;
+        }
+      }
+
+      //Details here: https://flaviocopes.com/clipboard-api/   Basic async promise handling from clipboard api
+      async function copytoClip() {
+        if (!navigator.clipboard) {
+          return console.log('clipboard not available');
+        }
+        let text = cssText.innerText;
+        console.log(text);
+        try {
+          await navigator.clipboard.writeText(text);
+          window.alert('Copied to clipboard!');
+        } catch (err) {
+          console.error('failed to copy!', err);
+        }
+      }
+
+      inputs.forEach((input) => input.addEventListener('change', changeBorder));
+      clipboard.addEventListener('click', copytoClip);
+    </script>
+  </body>
+</html>
+
+<!-- User can see a box which has a border-radius property applied to it
+ User can change the 4 border-radius values that are applied to the box (top-left, top-right, bottom-left, bottom-right)
+ User can copy the resulting CSS to the clipboard -->
