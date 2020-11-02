@@ -1,13 +1,12 @@
 // ! Christmas lights from Florin Pop  Started on: Thursday October 29, 2020 01:54PM idea https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Christmas-Lights-App.md
+
+//@? May'be I'll add in some user input/dom control later too.  it'd just be grabbing input values adn plugging them into the fxns
+
 const colors = ['red', 'orange', 'blue', 'green', 'yellow', 'cyan'];
 
+// prettier-ignore
 const shadows = [
-  '#fc6f65',
-  '#f5a658',
-  '#8cfaf3',
-  '#a0fc8b',
-  '#f5e97f',
-  '#acfcfa',
+  '#fc6f65', '#f5a658','#8cfaf3','#a0fc8b','#f5e97f','#acfcfa',
 ];
 
 //@@ =============== DOM ELEMENTS  =============
