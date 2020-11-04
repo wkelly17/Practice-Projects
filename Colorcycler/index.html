@@ -1,0 +1,60 @@
+<!-- ! Color cycler project from Florin POp on github:   Started on Wednesday November 04, 2020 10:18AM;   link:  https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Color-Cycle-App.md-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/styles.css" />
+    <title>Color Cycler - Florin Pop</title>
+  </head>
+  <body>
+    <h1>Color Cycler</h1>
+    <input type="color" name="colorpicker" id="colorpicker" />
+    <span class="picked-color">Picked Color</span>
+    <div class="displayedColor"></div>
+    <div class="rgbvalues">
+      <span class="rvalue">Red</span>
+      <span class="gvalue">Green</span>
+	  <span class="bvalue">Blue</span>
+	  <p class='hexDisplay'>Hex: </p>
+    </div>
+    <div class="incrementers-container">
+      <label for="redIncrementer">
+        Red increment value
+        <input
+          type="number"
+          name="redIncrementer"
+          id="redIncrementer"
+          class="incrementerInput redIncrementer"
+          max="25"
+          min="-25"
+        />
+      </label>
+      <label for="greenIncrementer">
+        Green increment value
+        <input
+          type="number"
+          name="greenIncrementer"
+          id="greenIncrementer"
+          class="incrementerInput greenIncrementer"
+          max="25"
+          min="-25"
+        />
+      </label>
+      <label for="blueIncrementer"
+        >Blue increment value
+        <input
+          type="number"
+          name="blueIncrementer"
+          id="blueIncrementer"
+          class="incrementerInput blueIncrementer"
+          max="25"
+          min="-25"
+        />
+      </label>
+    </div>
+    <button class="start-cycle">Start Cycling</button>
+
+    <script src="app.js"></script>
+  </body>
+</html>

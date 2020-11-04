@@ -1,0 +1,77 @@
+ /*  ! Color cycler project from Florin POp on github:   Started on Wednesday November 04, 2020 10:18AM;   link:  https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Color-Cycle-App.md */
+ 
+ /* ==== Basic CSS Reset ==== */
+ :root {
+	--colorPicker: black; /* ! will be edited vs js */
+  }
+
+  html {
+	box-sizing: border-box;
+  }
+
+  *,
+  *:before,
+  *:after {
+	box-sizing: inherit;
+  }
+
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ol,
+  ul {
+	margin: 0;
+	padding: 0;
+  }
+
+  ol,
+  ul {
+	list-style: none;
+  }
+
+  img {
+	max-width: 100%;
+	height: auto;
+  }
+  /* ==== End CSS Reset ==== */
+
+  h1 {
+	text-align: center;
+  }
+
+  body {
+	width: 1500px;
+	width: max-content;
+	/* max-width: calc(); */
+	margin: 0 auto;
+	padding: 1em;
+  }
+  .displayedColor {
+	width: 200px;
+	height: 200px;
+	margin: 1em auto;
+	background-color: var(--colorPicker);
+  }
+  .incrementers-container {
+	display: flex;
+	/* flex-direction: column; */
+	justify-content: space-between;
+	align-items: center;
+	padding: 0.5em;
+	border: solid red 1px;
+  }
+
+  .incrementers-container input {
+	margin: 0.5em 1em 0 0;
+  }
+
+  .start-cycle {
+	padding: 0.5em;
+	margin: 1em 0;
+	font-size: 1rem;
+  }
