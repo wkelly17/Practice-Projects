@@ -9,14 +9,21 @@
   </head>
   <body>
     <h1>Color Cycler</h1>
+    <p class="source-link">
+      From
+      <a
+        href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Color-Cycle-App.md"
+        >florinpop17 colorpicker
+      </a>
+    </p>
     <input type="color" name="colorpicker" id="colorpicker" />
     <span class="picked-color">Picked Color</span>
     <div class="displayedColor"></div>
     <div class="rgbvalues">
       <span class="rvalue">Red</span>
       <span class="gvalue">Green</span>
-	  <span class="bvalue">Blue</span>
-	  <p class='hexDisplay'>Hex: </p>
+      <span class="bvalue">Blue</span>
+      <p class="hexDisplay">Hex:</p>
     </div>
     <div class="incrementers-container">
       <label for="redIncrementer">
@@ -53,6 +60,7 @@
         />
       </label>
     </div>
+    <p class="note">Max and min for value is (arbitrarily) +/- 25</p>
     <button class="start-cycle">Start Cycling</button>
 
     <script src="app.js"></script>

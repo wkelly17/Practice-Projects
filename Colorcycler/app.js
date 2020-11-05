@@ -5,7 +5,7 @@
 // add in user choice for interval
 //add in notice that default increment is 1;
 //change from input = color to just a text input that accepts a 6 or 3 length value. (if 3, each piece would need to be doubled for easy 6 big hex updating)
-
+//If a number is typed in above 25 on inputs, adjust down to 25.
 
 const root = document.documentElement; //used for setting css varialbes
 let colorPicker = document.querySelector('#colorpicker');
@@ -16,6 +16,7 @@ const rValueDisplay = document.querySelector('.rvalue');
 const gValueDisplay = document.querySelector('.gvalue');
 const bValueDisplay = document.querySelector('.bvalue');
 const hexDisplay = document.querySelector('.hexDisplay');
+let isCycling = false;  //control flow structure for start button event listener
 
 function setInitialBoxColor() {
   pickedColor = this.value; //update global to be accessed in cycle color
@@ -35,37 +36,33 @@ function setInitialBoxColor() {
   hexDisplay.textContent = 'Hex Code: ' + pickedColor;
 }
 
-// function resetover255(num) {
-//   'checking reset';
-//   console.log({ num });
-//   if (num > 255) {
-//     return (num = 0);
-//     console.log(num);
-//   }
-// }
-
 function cycleColor() {
-  startBtn.innerText = 'Stop';
-  startBtn.removeEventListener('click', cycleColor);
+  //   debugger;
 
-  //selecting increments and disabling during function
-  let redIncrementer = document.querySelector('.redIncrementer');
-  redIncrementer.setAttribute('disabled', true);
-  let greenIncrementer = document.querySelector('.greenIncrementer');
-  greenIncrementer.setAttribute('disabled', true);
-  let blueIncrementer = document.querySelector('.blueIncrementer');
-  blueIncrementer.setAttribute('disabled', true);
+  isCycling = !isCycling;
+  console.log(isCycling);
 
-  //checking value validity
-  let redValue = redIncrementer.value;
-  redValue == '' ? (redValue = 1) : (redValue = Number(redValue));
-  let greenValue = greenIncrementer.value;
-  greenValue == '' ? (greenValue = 1) : (greenValue = Number(greenValue));
-  let blueValue = blueIncrementer.value;
-  blueValue == '' ? (blueValue = 1) : (blueValue = Number(blueValue));
+  function cyclingColors() {
+    startBtn.innerText = 'Stop';
 
-  let cycling = setInterval(() => {
+    //disabling increment changing during cycles
+    let redIncrementer = document.querySelector('.redIncrementer');
+    redIncrementer.setAttribute('disabled', true);
+    let greenIncrementer = document.querySelector('.greenIncrementer');
+    greenIncrementer.setAttribute('disabled', true);
+    let blueIncrementer = document.querySelector('.blueIncrementer');
+    blueIncrementer.setAttribute('disabled', true);
+
+    //getting incrementers and checking Increment value validity
+    let redValue = redIncrementer.value;
+    redValue == '' ? (redValue = 1) : (redValue = Number(redValue));
+    let greenValue = greenIncrementer.value;
+    greenValue == '' ? (greenValue = 1) : (greenValue = Number(greenValue));
+    let blueValue = blueIncrementer.value;
+    blueValue == '' ? (blueValue = 1) : (blueValue = Number(blueValue));
+
     // debugger;
+    //grabbing initial red and hexRed values
     let red = pickedColor.slice(1, 3);
     let hexRed = Number(parseInt(red, 16));
     console.log({ red, hexRed });
@@ -76,46 +73,60 @@ function cycleColor() {
     let hexBlue = Number(parseInt(blue, 16));
     console.log({ blue, hexBlue });
     //no end index slice to end of string thereby capturing if the last is 1 digit or 2.
-    // console.log({ blue, hexBlue });
+
+    //hexRed
     hexRed += redValue;
-    hexRed > 255 ? (hexRed = 0) : (hexRed = hexRed); //! used to keep hex codes to six di
+    hexRed > 255 ? (hexRed = 0) : (hexRed = hexRed); //! used to keep hex codes to six digits
+    //hexGreen
     hexGreen += greenValue;
     hexGreen > 255 ? (hexGreen = 0) : (hexGreen = hexGreen);
+    //hexBlue
     hexBlue += blueValue;
     hexBlue > 255 ? (hexBlue = 0) : (hexBlue = hexBlue);
-    // resetover255(hexRed);
-    // resetover255(hexGreen);
-    // resetover255(hexBlue);
-    // console.log({ hexRed, hexGreen, hexBlue });
-    // red = Number(hexRed.toFixed(2)).toString(16);
+    //red
     red = hexRed.toString(16);
     red.length == 1 ? (red = '0' + red) : (red = red);
+    //green
     green = hexGreen.toString(16);
     green.length == 1 ? (green = '0' + green) : (green = green);
-    // green = Number(hexGreen.toFixed(2)).toString(16);
+    // blue
     blue = hexBlue.toString(16);
     blue.length == 1 ? (blue = '0' + blue) : (blue = blue);
-    // blue = Number(hexBlue.toFixed(2)).toString(16);
+
+    //check console
     console.log({ red, hexRed, green, hexGreen, blue, hexBlue });
     pickedColor = `#${red}${green}${blue}`;
-    console.log({ pickedColor });
+    //   console.log({ pickedColor });
+
+    //@# update DOM and CSS custom
     rValueDisplay.textContent = 'Red: ' + hexRed;
     gValueDisplay.textContent = 'Green: ' + hexGreen;
     bValueDisplay.textContent = 'Blue: ' + hexBlue;
     hexDisplay.textContent = 'Hex Code: ' + pickedColor;
+    colorPicker.value = pickedColor;
     root.style.setProperty(`--colorPicker`, `${pickedColor}`);
-  }, 1000);
+  }
 
-  startBtn.addEventListener('click', () => {
-    clearInterval(cycling);
+  //   const start = function(){
+  // 	  return setInterval(cyclingColors, 1000);
+  //   }  //? was trying to see if I could used this to cancel interval.
+
+  if (!isCycling) {
+    console.log('stopping it');
+    clearInterval(start);
     startBtn.innerText = 'Start';
     redIncrementer.removeAttribute('disabled');
     greenIncrementer.removeAttribute('disabled');
     blueIncrementer.removeAttribute('disabled');
-    startBtn.addEventListener('click', cycleColor);
+    // startBtn.addEventListener('click', cycleColor);
     return;
-  });
-  // console.log(green++);
+  }
+  //   const start = setInterval(cyclingColors, 1000);
+  else {
+    start = setInterval(cyclingColors, 1000);
+    //? interval id leaks to global state since unset variable type, but I can't figure out how to close over the interval to make it accessible and clearable.  It works this way, but I wanted to see if I could keep my variables within the primary function scopes.  I keep either creating duplicate intervals or getting scoping problems.  It undoes the multiple event listeners though.
+    //? I think it is due to this little quirk regarding execution context: Code executed by setInterval() runs in a separate execution context than the function from which it was called. https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval
+  }
 }
 
 colorPicker.addEventListener('input', setInitialBoxColor);
