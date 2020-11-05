@@ -1,0 +1,84 @@
+<!-- ! Countdown Timer Project started from FlorinPop list on Thursday November 05, 2020 09:19AM:   Link w/ user stories @  -https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Countdown-Timer-App.md -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/styles.css" />
+    <title>Countdown Timer</title>
+  </head>
+  <body>
+    <h1 class="project-title">Countdown Timer</h1>
+    <div>
+      <form class="inputs-container">
+        <label for="eventName"> Event Name</label>
+        <input type="text" name="eventName" id="eventName" />
+
+        <label for="datePicker"> Pick a Date</label>
+        <input type="date" name="datePicker" id="datePicker" />
+
+        <label for="timePicker">Pick a time (optional) </label>
+        <input type="time" name="timePicker" id="timePicker" value="00:00" />
+        <button class="startBtn" type="submit">Start Countdown</button>
+      </form>
+    </div>
+
+    <div class="events-container"></div>
+
+    <style>
+      .inputs-container {
+        width: max-content;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+      }
+      .inputs-container label,
+      .inputs-container input {
+        padding: 0.25em;
+        margin: 0.25em;
+      }
+
+      .startBtn {
+        display: block;
+        grid-column: 1/-1;
+        width: 30%;
+        margin: 1em auto;
+        padding: 0.25em 1.25em;
+        font-size: 0.875rem;
+      }
+
+      .events-container {
+        border: solid black 1px;
+        width: 1500px;
+        max-width: calc(100% - 7rem);
+        margin: 0 auto;
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+      }
+      .event {
+        border: solid blue 1px;
+        padding: 0.25rem;
+      }
+
+      .eventName {
+        text-align: center;
+      }
+
+      .time-left {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        border: solid green 1px;
+      }
+
+      .time-slot {
+        display: inline-block;
+        padding: 0.25em;
+      }
+    </style>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
