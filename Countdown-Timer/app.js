@@ -112,14 +112,19 @@ function updateTime(timeDifference, timeDisplay, cancelBtn) {
   <span class="time-slot">Seconds left: ${remainderSeconds}</span>
   `;
     }
-    if (remainderSeconds <= 0) {
+    //@@ stopping the interval if there is no time left
+    if (
+      [remainderSeconds, remainderMinutes, remainderHours, days].every(
+        (unit) => unit <= 0 || !unit
+      )
+    ) {
       clearInterval(dateInterval);
       cancelBtn.textContent = "Time's up! Hooray!";
       cancelBtn.style.backgroundColor = '#3cc214';
       alert("Time's up!");
     }
   }, 1000);
-
+  //@@ stopping the itnerval if the cancel button is clicked
   cancelBtn.dataset.interval = dateInterval;
   cancelBtn.addEventListener('click', () => {
     clearInterval(cancelBtn.dataset.interval);

@@ -35,8 +35,22 @@ img {
 }
 /* ==== End CSS Reset ==== */
 
+body {
+  width: 1100px;
+  max-width: calc(100% - 9rem);
+  margin: 0 auto;
+  padding: 1em;
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    width: 500px;
+    max-width: calc(100% - 3rem);
+  }
+}
+
 .inputs-container {
-  width: max-content;
+  /* width: max-content; */
   display: grid;
   grid-template-columns: 1fr 2fr;
 }
@@ -44,12 +58,14 @@ img {
 .inputs-container input {
   padding: 0.25em;
   margin: 0.25em;
+  max-width: 300px;
 }
 
 .startBtn {
   display: block;
   grid-column: 1/-1;
   width: 30%;
+  min-width: fit-content;
   margin: 1em auto;
   padding: 0.25em 1.25em;
   font-size: 0.875rem;
@@ -57,8 +73,8 @@ img {
 
 .events-container {
   border: solid black 1px;
-  width: 1500px;
-  max-width: calc(100% - 7rem);
+  /* width: 1500px;
+  max-width: calc(100% - 7rem); */
   margin: 0 auto;
   display: flex;
   justify-content: flex-start;
