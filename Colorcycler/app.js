@@ -16,7 +16,7 @@ const rValueDisplay = document.querySelector('.rvalue');
 const gValueDisplay = document.querySelector('.gvalue');
 const bValueDisplay = document.querySelector('.bvalue');
 const hexDisplay = document.querySelector('.hexDisplay');
-let isCycling = false;  //control flow structure for start button event listener
+let isCycling = false; //control flow structure for start button event listener
 
 function setInitialBoxColor() {
   pickedColor = this.value; //update global to be accessed in cycle color
@@ -56,10 +56,18 @@ function cycleColor() {
     //getting incrementers and checking Increment value validity
     let redValue = redIncrementer.value;
     redValue == '' ? (redValue = 1) : (redValue = Number(redValue));
+
+    //ternaries are enforcing max/min since inputs are validated through a form submission
+    redValue > 25 ? (redValue = 25) : (redValue = redValue);
+    redValue < -25 ? (redValue = -25) : (redValue = redValue);
     let greenValue = greenIncrementer.value;
     greenValue == '' ? (greenValue = 1) : (greenValue = Number(greenValue));
+    greenValue > 25 ? (greenValue = 25) : (greenValue = greenValue);
+    greenValue < -25 ? (greenValue = -25) : (greenValue = greenValue);
     let blueValue = blueIncrementer.value;
     blueValue == '' ? (blueValue = 1) : (blueValue = Number(blueValue));
+    blueValue > 25 ? (blueValue = 25) : (blueValue = blueValue);
+    blueValue < -25 ? (blueValue = -25) : (blueValue = blueValue);
 
     // debugger;
     //grabbing initial red and hexRed values
@@ -76,16 +84,19 @@ function cycleColor() {
 
     //hexRed
     hexRed += redValue;
-    hexRed > 255 ? (hexRed = 0) : (hexRed = hexRed); //! used to keep hex codes to six digits
+    hexRed > 255 ? (hexRed = 0) : (hexRed = hexRed); //! if incrementing over 255
+    hexRed < 0 ? (hexRed = 255) : (hexRed = hexRed); //! if decrementing below 0
     //hexGreen
     hexGreen += greenValue;
     hexGreen > 255 ? (hexGreen = 0) : (hexGreen = hexGreen);
+    hexGreen < 0 ? (hexGreen = 255) : (hexGreen = hexGreen);
     //hexBlue
     hexBlue += blueValue;
     hexBlue > 255 ? (hexBlue = 0) : (hexBlue = hexBlue);
+    hexBlue < 0 ? (hexBlue = 255) : (hexBlue = hexBlue);
     //red
     red = hexRed.toString(16);
-    red.length == 1 ? (red = '0' + red) : (red = red);
+    red.length == 1 ? (red = '0' + red) : (red = red); //! used to keep hex values as 6 length values since 3 length values don't work with current setup
     //green
     green = hexGreen.toString(16);
     green.length == 1 ? (green = '0' + green) : (green = green);

@@ -1,0 +1,95 @@
+/*  ! Countdown Timer Project started from FlorinPop list on Thursday November 05, 2020 09:19AM:   Link w/ user stories @  -https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Countdown-Timer-App.md  */
+/* ==== Basic CSS Reset ==== */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+/* ==== End CSS Reset ==== */
+
+.inputs-container {
+  width: max-content;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}
+.inputs-container label,
+.inputs-container input {
+  padding: 0.25em;
+  margin: 0.25em;
+}
+
+.startBtn {
+  display: block;
+  grid-column: 1/-1;
+  width: 30%;
+  margin: 1em auto;
+  padding: 0.25em 1.25em;
+  font-size: 0.875rem;
+}
+
+.events-container {
+  border: solid black 1px;
+  width: 1500px;
+  max-width: calc(100% - 7rem);
+  margin: 0 auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.event {
+  border: solid blue 1px;
+  padding: 0.5rem;
+}
+
+.eventName {
+  text-align: center;
+}
+
+.time-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: solid green 4px;
+}
+
+.time-slot {
+  display: inline-block;
+  padding: 0.25em;
+}
+.cancelBtn {
+  display: block;
+  padding: 0.5em 1em;
+  margin: 0.5em auto;
+  background-color: rgb(216, 3, 3);
+  color: whitesmoke;
+  font-weight: bold;
+}
