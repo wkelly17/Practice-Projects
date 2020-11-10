@@ -1,0 +1,172 @@
+<!-- ! Picture flipper project from Floring pop list started on November 09, 2020;   link : https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Flip-Image-App.md  Fulfills most user stories on this page -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/styles.css" />
+    <title>Image Flipper Florin Pop Project</title>
+  </head>
+  <body>
+    <div class="project-container">
+      <h1>Image Flipper</h1>
+      <p>
+        See user stories and description
+        <a
+          href="https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Flip-Image-App.md"
+        >
+          here on Github
+        </a>
+      </p>
+      <label for="pictureChangerFile">
+        Upload a picture
+        <input
+          type="file"
+          name="pictureChangerFile"
+          id="pictureChangerFile"
+          class="pictureChanger"
+        />
+      </label>
+      <label for="pictureChangerURL">
+        Or add an image via URL
+        <input type="text" name="pictureChangerURL" id="pictureChangerURL" />
+        <button class="pictureChangerURLBtn">Display image</button>
+      </label>
+      <div class="image-container">
+        <div class="single-image-group flex-reverse">
+          <img
+            src="http://placegoat.com/300/300"
+            class="single-image imageOne"
+          />
+          <div class="directional-arrows">
+            <span class="arrow" data-degrees="0" data-axis="X">
+              &uparrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="Y">
+              &leftarrow;
+            </span>
+            <span class="arrow" data-degrees="0" data-axis="Y">
+              &rightarrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="X">
+              &downarrow;
+            </span>
+          </div>
+        </div>
+        <div class="single-image-group">
+          <img
+            src="http://placegoat.com/300/300"
+            class="single-image imageOne"
+          />
+          <div class="directional-arrows">
+            <span class="arrow" data-degrees="360" data-axis="X">
+              &uparrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="Y">
+              &leftarrow;
+            </span>
+            <span class="arrow" data-degrees="360" data-axis="Y">
+              &rightarrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="X">
+              &downarrow;
+            </span>
+          </div>
+        </div>
+        <div class="single-image-group flex-reverse">
+          <img
+            src="http://placegoat.com/300/300"
+            class="single-image imageOne"
+          />
+          <div class="directional-arrows">
+            <span class="arrow" data-degrees="0" data-axis="X">
+              &uparrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="Y">
+              &leftarrow;
+            </span>
+            <span class="arrow" data-degrees="0" data-axis="Y">
+              &rightarrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="X">
+              &downarrow;
+            </span>
+          </div>
+        </div>
+        <div class="single-image-group">
+          <img
+            src="http://placegoat.com/300/300"
+            class="single-image imageOne"
+          />
+          <div class="directional-arrows">
+            <span class="arrow" data-degrees="360" data-axis="X">
+              &uparrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="Y">
+              &leftarrow;
+            </span>
+            <span class="arrow" data-degrees="360" data-axis="Y">
+              &rightarrow;
+            </span>
+            <span class="arrow" data-degrees="180" data-axis="X">
+              &downarrow;
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const directionalArrows = document.querySelectorAll(
+        '.directional-arrows'
+      );
+      const pictureChangerFile = document.querySelector('#pictureChangerFile');
+      const pictureChangerURL = document.querySelector('#pictureChangerURL');
+      const pictureChangerURLBtn = document.querySelector(
+        '.pictureChangerURLBtn'
+      );
+
+      function transformImage() {
+        //   console.dir(this);
+        let image = this.previousElementSibling;
+        image.style.transform
+          ? (image.style.transform = image.style.transform)
+          : (image.style.transform = 'rotateX(0deg) rotateY(0deg)');
+        console.log(image.style.transform);
+        let axis = event.target.dataset.axis;
+        let degrees = event.target.dataset.degrees;
+        let [currentX, currentY] = image.style.transform.match(/\d+/gi);
+        console.log(currentX, currentY);
+        if (axis == 'X') {
+          currentX = degrees;
+        } else {
+          currentY = degrees;
+        }
+        console.log(image);
+        image.style.transform = `rotateX(${currentX}deg) rotateY(${currentY}deg)`;
+      }
+
+      function changePhotoFromFile() {
+        let selectedFile = pictureChanger.files[0];
+        const images = document.querySelectorAll('.single-image');
+
+        let reader = new FileReader();
+        reader.onload = function () {
+          images.forEach((img) => (img.src = this.result));
+        };
+        reader.readAsDataURL(selectedFile);
+      }
+
+      directionalArrows.forEach((arrow) =>
+        arrow.addEventListener('click', transformImage)
+      );
+
+      function changePhotoFromURL() {
+        const images = document.querySelectorAll('.single-image');
+        images.forEach((img) => (img.src = pictureChangerURL.value));
+      }
+
+      pictureChangerFile.addEventListener('change', changePhotoFromFile);
+      pictureChangerURLBtn.addEventListener('click', changePhotoFromURL);
+    </script>
+  </body>
+</html>
