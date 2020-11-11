@@ -1,0 +1,226 @@
+<!-- ! https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Hello-App.md -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hello Login (FlorinPop)</title>
+    <link rel="stylesheet" href="./CSS/styles.css" />
+  </head>
+  <body>
+    <div class="project-container">
+      <h1>Hello Project</h1>
+      <div class="login-container">
+        <form action="" class="login-form">
+          <label for="username"
+            >Username
+            <input
+              type="text"
+              class="username"
+              id="username"
+              autocomplete="username"
+            />
+          </label>
+          <label for="password"
+            >Password
+            <input
+              type="password"
+              class="password"
+              id="password"
+              autocomplete="current-password"
+            />
+          </label>
+          <button type="submit" class="login" data-action="login">Login</button>
+          <button type="button" class="login" data-action="logout">
+            Logout
+          </button>
+        </form>
+        <label for="language">
+          Feel free to input a language code (not an exhaustive list)
+          <input type="text" name="language" id="language" />
+        </label>
+        <h3 class="message"></h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Language</th>
+              <th>Code</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>English</td>
+              <td>en</td>
+            </tr>
+            <tr>
+              <td>Spanish</td>
+              <td>es</td>
+            </tr>
+            <tr>
+              <td>Portuguese</td>
+              <td>pt</td>
+            </tr>
+            <tr>
+              <td>Arabic</td>
+              <td>ar</td>
+            </tr>
+            <tr>
+              <td>Dutch</td>
+              <td>dv</td>
+            </tr>
+            <tr>
+              <td>German</td>
+              <td>de</td>
+            </tr>
+            <tr>
+              <td>Hebrew</td>
+              <td>he</td>
+            </tr>
+            <tr>
+              <td>Japanese</td>
+              <td>ja</td>
+            </tr>
+            <tr>
+              <td>Hindi</td>
+              <td>hi</td>
+            </tr>
+            <tr>
+              <td>Nepali</td>
+              <td>ne</td>
+            </tr>
+            <tr>
+              <td>Swahili</td>
+              <td>sw</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <style>
+      /* ==== Basic CSS Reset ==== */
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      ol,
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+
+      ol,
+      ul {
+        list-style: none;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      /* ==== End CSS Reset ==== */
+      :root {
+        --errorBrd: solid red 1px;
+        --successBrd: solid rgb(3, 168, 3) 2px;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      th,
+      td {
+        border: solid 1px black;
+        padding: 0.25em;
+      }
+      table {
+        margin: 1rem auto;
+        font-size: 1.125rem;
+        text-align: center;
+      }
+
+      /* .login-form input {
+        border: initial;
+      } */
+    </style>
+    <script>
+      const userActionButtons = document.querySelectorAll('[data-action]');
+      let isLoggedIn = false;
+
+      async function handleButton(event) {
+        event.preventDefault();
+        const messageDisplay = document.querySelector('.message');
+        const inputs = [...document.querySelectorAll('.login-form input')];
+        const username = inputs[0];
+        const languageChosen = document.querySelector('#language').value;
+
+        if (this.dataset.action == 'login') {
+          if (inputs.some((input) => input.value == '')) {
+            inputs.forEach((input) => (input.style.border = 'var(--errorBrd)'));
+            messageDisplay.innerText = 'Error logging in';
+            return;
+          } else {
+            inputs.forEach(
+              (input) => (input.style.border = 'var(--successBrd)')
+            );
+            loggedin = true;
+          }
+          let ip = await getIP();
+          let greetingMsg = await greeting(languageChosen);
+          messageDisplay.innerHTML = `${greetingMsg} ${username.value}: You have successfully logged in`;
+          console.log(ip);
+        } else if (this.dataset.action == 'logout') {
+          if (!loggedin) {
+            return;
+          }
+          inputs.forEach(
+            (input) => (
+              (input.style.border = 'solid 1px black'), (input.value = '')
+            )
+          );
+          messageDisplay.innerText = 'You have successfully logged out!';
+        }
+      }
+      async function getIP() {
+        const response = await fetch('http://ip-api.com/json/');
+        const ip = await response.json();
+        // console.log(ip);
+        return ip;
+      }
+      async function greeting(langCode) {
+        let ipObj = await getIP();
+        let ip = ipObj.query;
+        let response;
+        if (langCode) {
+          response = await fetch(
+            `https://fourtonfish.com/hellosalut/?lang=${langCode}&ip=${ip}`
+          );
+        } else {
+          response = await fetch(
+            `https://fourtonfish.com/hellosalut/?ip=${ip}`
+          );
+        }
+
+        let greeting = await response.json();
+        console.log(greeting);
+        return greeting.hello;
+      }
+
+      userActionButtons.forEach((button) =>
+        button.addEventListener('click', handleButton)
+      );
+    </script>
+  </body>
+</html>
