@@ -1,0 +1,219 @@
+<!-- ! json to csv converter florinpop project started on Wednesday November 11, 2020 11:19AM:  User stories and project description here: https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/JSON2CSV-App.md -->
+<!-- # This was hard for me... at least converting the csv to json.  json to csv was easier; It's not  the most fully featured but it works -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/styles.css" />
+    <title>JSON2CSV Converter</title>
+  </head>
+  <body>
+    <div class="project-container">
+      <h1>JSON to CSV converter</h1>
+      <div class="text-containers">
+        <h2 class="input-header">Json or CSV Input</h2>
+        <textarea
+          name="inputArea"
+          class="inputArea"
+          id="inputArea"
+          cols="30"
+          rows="10"
+          data-type="input"
+        >
+Id,animal
+1,dog
+2,cat
+3,fish
+</textarea
+        >
+        <button
+          class="json-convert-button"
+          id="json-convert-button"
+          data-convert="toCsv"
+        >
+          Convert to CSV
+        </button>
+        <button
+          class="csv-convert-button"
+          id="csv-convert-button"
+          data-convert="toJson"
+        >
+          Convert to JSON
+        </button>
+        <h2 class="output-header">CSV or JSON Output</h2>
+        <textarea
+          name="outputArea"
+          class="outputArea"
+          id="outputArea"
+          cols="30"
+          rows="10"
+          data-type="output"
+        ></textarea>
+      </div>
+      <button class="clearBtn" id="clearBtn">Clear Fields</button>
+      <h3 data-role="json-warning"></h3>
+    </div>
+
+    <style>
+      /* ==== Basic CSS Reset ==== */
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      ol,
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+
+      ol,
+      ul {
+        list-style: none;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      /* ==== End CSS Reset ==== */
+      .project-container {
+        width: 1500px;
+        max-width: calc(100% - 7rem);
+        margin: 0 auto;
+      }
+      .text-containers {
+        display: grid;
+        grid-template-columns: 1fr 120px 1fr;
+        grid-template-areas:
+          'inputH . outputH'
+          'input btn1 output'
+          'input btn2 output';
+        align-items: center;
+        grid-gap: 1em;
+      }
+
+      .input-header {
+        grid-area: inputH;
+        text-align: center;
+      }
+      .output-header {
+        grid-area: outputH;
+        text-align: center;
+      }
+      .inputArea {
+        grid-area: input;
+      }
+      .outputArea {
+        grid-area: output;
+      }
+
+      .json-convert-button,
+      .csv-convert-button {
+        grid-area: btn1;
+        display: inline-block;
+        padding: 0.5em 2em;
+        background: #ccc;
+        cursor: pointer;
+      }
+      .csv-convert-button {
+        grid-area: btn2;
+      }
+      .clearBtn {
+        display: block;
+        margin: 3em auto;
+        padding: 0.25em 2em;
+        cursor: pointer;
+      }
+      button:hover {
+        background: rgb(139, 4, 192);
+        color: white;
+      }
+    </style>
+    <script>
+      const convertToCsvBtn = document.querySelector('#json-convert-button');
+      const convertToJsonBtn = document.querySelector('#csv-convert-button');
+      const clearBtn = document.querySelector('#clearBtn');
+
+      function convertToJson(event) {
+        const input = document.querySelector('[data-type = input]');
+        const output = document.querySelector('[data-type = output]');
+        const alertMsg = document.querySelector('[data-role = json-warning]');
+
+        if (!input.value) {
+          return (alertMsg.innerText = 'No data to convert');
+        }
+
+        let arr = input.value.split('\n').map((item) => item.split(','));
+        let keys = arr.splice(0, 1).flat();
+        let result = [];
+        //I don't like this double mapping at all, but it works.  It certainly isn't as full featured as some converters I've seen that let you wrap values in quote or not and some other features.
+        let jsonObj = arr.map((item, idx) =>
+          item.map((sub, idx2) => `"${keys[idx2]}":"${sub}"`)
+        );
+        console.log(jsonObj);
+        for (let index = 0; index < jsonObj.length; index++) {
+          const element = `{${jsonObj[index]}}`;
+          result.push(element);
+        }
+        console.log(result);
+        output.value = `[${result}]`;
+      }
+      function convertToCsv(event) {
+        // const textAreas = document.querySelectorAll('[data-type]');
+        const input = document.querySelector('[data-type = input]');
+        const output = document.querySelector('[data-type = output]');
+        const alertMsg = document.querySelector('[data-role = json-warning]');
+        console.log(alertMsg);
+        let convertedJson;
+        try {
+          convertedJson = JSON.parse(input.value);
+        } catch (error) {
+          console.log(error);
+          alertMsg.innerText =
+            'Error in JSON formatting or no data present to convert';
+          return;
+        }
+
+        let keys = Object.keys(convertedJson[0]);
+        let csvKeys = keys.join(',');
+        output.value += csvKeys + '\n';
+
+        let values = convertedJson.map((obj) => Object.values(obj));
+
+        values.forEach(function (arr) {
+          let line = arr.join(',');
+          output.value += line + '\n';
+        });
+        console.dir(values);
+        console.log({ convertedJson, keys, values });
+      }
+      function clearFields() {
+        const input = document.querySelector('[data-type = input]');
+        const output = document.querySelector('[data-type = output]');
+        const alertMsg = document.querySelector('[data-role = json-warning]');
+        input.value = '';
+        output.value = '';
+        alertMsg.innerText = '';
+      }
+
+      convertToCsvBtn.addEventListener('click', convertToCsv);
+      convertToJsonBtn.addEventListener('click', convertToJson);
+      clearBtn.addEventListener('click', clearFields);
+    </script>
+  </body>
+</html>

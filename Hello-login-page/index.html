@@ -1,4 +1,4 @@
-<!-- ! https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Hello-App.md -->
+<!-- ! Started on November 10, 2020 https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Hello-App.md -->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -39,60 +39,63 @@
           <input type="text" name="language" id="language" />
         </label>
         <h3 class="message"></h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Language</th>
-              <th>Code</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>English</td>
-              <td>en</td>
-            </tr>
-            <tr>
-              <td>Spanish</td>
-              <td>es</td>
-            </tr>
-            <tr>
-              <td>Portuguese</td>
-              <td>pt</td>
-            </tr>
-            <tr>
-              <td>Arabic</td>
-              <td>ar</td>
-            </tr>
-            <tr>
-              <td>Dutch</td>
-              <td>dv</td>
-            </tr>
-            <tr>
-              <td>German</td>
-              <td>de</td>
-            </tr>
-            <tr>
-              <td>Hebrew</td>
-              <td>he</td>
-            </tr>
-            <tr>
-              <td>Japanese</td>
-              <td>ja</td>
-            </tr>
-            <tr>
-              <td>Hindi</td>
-              <td>hi</td>
-            </tr>
-            <tr>
-              <td>Nepali</td>
-              <td>ne</td>
-            </tr>
-            <tr>
-              <td>Swahili</td>
-              <td>sw</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="extra-info">
+          <table>
+            <thead>
+              <tr>
+                <th>Language</th>
+                <th>Code</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>English</td>
+                <td>en</td>
+              </tr>
+              <tr>
+                <td>Spanish</td>
+                <td>es</td>
+              </tr>
+              <tr>
+                <td>Portuguese</td>
+                <td>pt</td>
+              </tr>
+              <tr>
+                <td>Arabic</td>
+                <td>ar</td>
+              </tr>
+              <tr>
+                <td>Dutch</td>
+                <td>dv</td>
+              </tr>
+              <tr>
+                <td>German</td>
+                <td>de</td>
+              </tr>
+              <tr>
+                <td>Hebrew</td>
+                <td>he</td>
+              </tr>
+              <tr>
+                <td>Japanese</td>
+                <td>ja</td>
+              </tr>
+              <tr>
+                <td>Hindi</td>
+                <td>hi</td>
+              </tr>
+              <tr>
+                <td>Nepali</td>
+                <td>ne</td>
+              </tr>
+              <tr>
+                <td>Swahili</td>
+                <td>sw</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="your-info"></div>
+        </div>
       </div>
     </div>
     <style>
@@ -135,10 +138,27 @@
         --errorBrd: solid red 1px;
         --successBrd: solid rgb(3, 168, 3) 2px;
       }
+
       body {
+        padding: 1em;
         display: flex;
         justify-content: center;
         align-items: center;
+      }
+      .message {
+        color: rgb(10, 100, 10);
+        margin: 1em 0;
+      }
+      .extra-info {
+        margin: 1em 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .your-info {
+        line-height: 1.6;
+        margin-left: 2em;
       }
       th,
       td {
@@ -146,7 +166,6 @@
         padding: 0.25em;
       }
       table {
-        margin: 1rem auto;
         font-size: 1.125rem;
         text-align: center;
       }
@@ -163,9 +182,10 @@
         event.preventDefault();
         const messageDisplay = document.querySelector('.message');
         const inputs = [...document.querySelectorAll('.login-form input')];
-        const username = inputs[0];
-        const languageChosen = document.querySelector('#language').value;
+        const username = inputs[0].value;
+        const languageChosen = document.querySelector('#language');
 
+        //@#=============== LOGGIN IN  =============
         if (this.dataset.action == 'login') {
           if (inputs.some((input) => input.value == '')) {
             inputs.forEach((input) => (input.style.border = 'var(--errorBrd)'));
@@ -178,10 +198,12 @@
             loggedin = true;
           }
           let ip = await getIP();
-          let greetingMsg = await greeting(languageChosen);
-          messageDisplay.innerHTML = `${greetingMsg} ${username.value}: You have successfully logged in`;
-          console.log(ip);
-        } else if (this.dataset.action == 'logout') {
+          let greetingMsg = await greeting(languageChosen.value);
+          displayExtraHtml();
+          messageDisplay.innerHTML = `${greetingMsg} ${username}: You have successfully logged in`;
+        }
+        //@# =============== LOGGIN OUT  =============
+        else if (this.dataset.action == 'logout') {
           if (!loggedin) {
             return;
           }
@@ -190,13 +212,14 @@
               (input.style.border = 'solid 1px black'), (input.value = '')
             )
           );
-          messageDisplay.innerText = 'You have successfully logged out!';
+          messageDisplay.innerText = `You have successfully logged out! Have a great day ${username}`;
+          languageChosen.value = '';
         }
       }
       async function getIP() {
         const response = await fetch('http://ip-api.com/json/');
         const ip = await response.json();
-        // console.log(ip);
+        console.log(ip);
         return ip;
       }
       async function greeting(langCode) {
@@ -216,6 +239,20 @@
         let greeting = await response.json();
         console.log(greeting);
         return greeting.hello;
+      }
+      async function displayExtraHtml() {
+        const infoDisplay = document.querySelector('.your-info');
+        let ip = await getIP();
+        infoDisplay.innerHTML = `
+		<h3> Your info </h3>
+		   <ul>
+				  <li>Your country: ${ip.country}</li>
+				  <li>Your city: ${ip.city}</li>
+				  <li>Your ip address: ${ip.query}</li>
+				  <li>Your zip: ${ip.zip}</li>
+				  <li>Your service Provider: ${ip.isp}</li>
+			  </ul>
+		   `;
       }
 
       userActionButtons.forEach((button) =>
