@@ -1,0 +1,200 @@
+<!-- !Lorem generator project: Started Thursday November 12, 2020 11:38AM from florinpop list:  https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Lorem-Ipsum-Generator.md-->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lorem generator</title>
+    <link rel="stylesheet" href="./CSS/styles.css" />
+  </head>
+  <body>
+    <div class="project-container">
+      <h1>Lorem Generator</h1>
+      <div class="options">
+        <div class="paragraphs">
+          <label for="pagragraphNumber">Number of paragraphs</label>
+          <input type="number" name="pagragraphNumber" id="pagragraphNumber" />
+          <button class="btn paragraph-increment">+</button>
+          <button class="btn paragraph-decrement">-</button>
+        </div>
+        <div class="paragraph-length">
+          <input type="radio" name="length" id="short" value="short" />
+          <label for="short"> Short </label>
+          <input type="radio" name="length" id="medium" value="medium" />
+          <label for="medium"> Medium </label>
+          <input type="radio" name="length" id="long" value="long" />
+          <label for="long"> long </label>
+        </div>
+        <div class="additional-options">
+          <h2>Additional Options</h2>
+          <div class="option">
+            <input type="checkbox" name="links" id="links" value="link" />
+            <label for="links"> Links</label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="uls" id="uls" value="ul" />
+            <label for="uls"> unordered lists </label>
+          </div>
+          <div class="option">
+            <input type="checkbox" name="ols" id="ols" value="ol" />
+            <label for="ols">ordered lists </label>
+          </div>
+          <div class="option">
+            <input
+              type="checkbox"
+              name="headers"
+              id="headers"
+              value="headers"
+            />
+            <label for="headers">headers </label>
+          </div>
+        </div>
+        <button class="generate-lorem" data-action="generateLorem">
+          Generate Lorem
+        </button>
+        <button class="copy-lorem" data-action="copyLorem">Copy Lorem</button>
+      </div>
+      <div class="output"></div>
+    </div>
+
+    <style>
+      /* ==== Basic CSS Reset ==== */
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      ol,
+      ul {
+        margin: 0;
+        padding: 0;
+      }
+
+      ol,
+      ul {
+        list-style: none;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      /* ==== End CSS Reset ==== */
+      .project-container {
+        width: 1500px;
+        max-width: calc(100% - 6rem);
+        padding: 1em;
+        margin: 0 auto;
+        display: grid;
+        grid-gap: 1.5em;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          'head head'
+          'options output'
+          'options output';
+      }
+      h1 {
+        grid-area: head;
+      }
+      .options {
+        grid-area: options;
+      }
+      .output {
+        grid-area: output;
+      }
+      .additional-options {
+        margin-top: 1em;
+      }
+
+      .output {
+        border: solid blue 1px;
+        max-height: 100vh;
+        overflow: scroll;
+      }
+      .generate-lorem,
+      .copy-lorem {
+        display: inline-block;
+        padding: 0.25em 2em;
+        color: blue;
+        font-weight: bold;
+        margin-top: 1em;
+      }
+    </style>
+
+    <script>
+      const generateBtn = document.querySelector(
+        '[data-action="generateLorem"]'
+      );
+      const copyBtn = document.querySelector('[data-action="copyLorem"]');
+      const pgIncrementer = document.querySelector('.paragraph-increment');
+      const pgDecrementer = document.querySelector('.paragraph-decrement');
+      const numParagraphs = document.querySelector('#pagragraphNumber');
+
+      async function generateText() {
+        const output = document.querySelector('.output');
+        let num = numParagraphs.value;
+        let length = document.querySelector('.paragraph-length input:checked')
+          .value;
+        console.log(length);
+        const options = [
+          ...document.querySelectorAll('.additional-options input'),
+        ]
+          .filter((option) => option.checked)
+          .map((option) => `${option.value}`)
+          .join('/');
+        // console.log({ num, length, options });
+        let lorem = await callAPI(num, length, options);
+        output.innerText = lorem;
+      }
+
+      function increment() {
+        return numParagraphs.value++;
+      }
+
+      function decrement() {
+        if (numParagraphs.value == 0) {
+          return;
+        } else return numParagraphs.value--;
+      }
+      async function callAPI(num, length, options) {
+        let baseUrl =
+          'https://cors-anywhere.herokuapp.com/https://loripsum.net/api'; //cors issues on local host, so using heroku for testing purposes;
+
+        let response = await fetch(`${baseUrl}/${num}/${length}/${options}/`);
+        let lorem = await response.text();
+        return lorem;
+      }
+      function copyLorem() {
+        const output = document.querySelector('.output');
+        let lorem = output.innerText;
+        // console.log(lorem);
+        navigator.clipboard
+          .writeText(lorem)
+          .then(() => {
+            alert('succesfully copied');
+          })
+          .catch((err) => {
+            console.log('Something went wrong', err);
+          });
+      }
+
+      pgIncrementer.addEventListener('click', increment);
+      pgDecrementer.addEventListener('click', decrement);
+      generateBtn.addEventListener('click', generateText);
+      copyBtn.addEventListener('click', copyLorem);
+    </script>
+  </body>
+</html>
