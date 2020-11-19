@@ -1,0 +1,76 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/styles.css" />
+    <title>Pomodoro Clock</title>
+  </head>
+  <body>
+    <div class="project-container">
+      <h1>Pomodoro Clock</h1>
+      <h2>Timer: <span class="clock-display">25:00</span></h2>
+      <div class="clock">
+        <p>Session length (minutes)</p>
+        <div class="clockInputContainer">
+          <button
+            class="incrementerBtn"
+            data-action="decrement"
+            data-display="session"
+          >
+            -
+          </button>
+          <input
+            type="text"
+            id="clockInput"
+            placeholder="Enter minutes"
+            value="25"
+            data-display="session"
+          />
+          <button
+            class="incrementerBtn"
+            data-action="increment"
+            data-display="session"
+          >
+            +
+          </button>
+        </div>
+      </div>
+      <!-- Break section -->
+      <h2>Break Timer: <span class="break-display">5:00</span></h2>
+      <div class="clock">
+        <p>Session length</p>
+        <div class="clockInputContainer">
+          <button
+            class="incrementerBtn"
+            data-action="decrement"
+            data-display="break"
+          >
+            -
+          </button>
+          <input
+            type="text"
+            id="breakInput"
+            placeholder="Enter minutes"
+            value="5"
+            data-display="break"
+          />
+          <button
+            class="incrementerBtn"
+            data-action="increment"
+            data-display="break"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <div class="clock-controls-container">
+        <button class="clockControls" data-action="startOrPause">Start</button>
+        <button class="clockControls" data-action="stop">Stop</button>
+        <button class="clockControls" data-action="reset">Reset</button>
+      </div>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
