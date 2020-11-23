@@ -270,7 +270,7 @@ class PomodoroClock {
 
     let finishedTime = this.timeRemaining * 1000; //timerRemaining is seconds; making it ms;
     let seconds = this.timeRemaining;
-    let minutes = Mat                                                                                                                                                                             h.floor(seconds / 60);
+    let minutes = Math.floor(seconds / 60);
     let remainderSeconds = seconds % 60;
 
     this.breakInterval = setInterval(() => {
