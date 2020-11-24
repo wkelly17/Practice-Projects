@@ -1,0 +1,37 @@
+<!-- ! Quiz App from Florin Pop list: Started on Monday November 23, 2020 10:06AM.  Link  https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Quiz-App.md
+First iteration finished: Tuesday November 24, 2020 01:34PM -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/styles.css" />
+    <title>Quiz App Project</title>
+  </head>
+  <body>
+    <div class="project-container">
+      <h1>Quiz Time</h1>
+      `
+      <p class="currentQuestion"></p>
+      <div class="quiz-container">
+        <ul class="quizChoices">
+          <li class="answerArea">1: <span class="answerChoice"></span></li>
+          <li class="answerArea">2: <span class="answerChoice"></span></li>
+          <li class="answerArea">3: <span class="answerChoice"></span></li>
+          <li class="answerArea">4: <span class="answerChoice"></span></li>
+        </ul>
+        <p class="endGameMessage"></p>
+      </div>
+      <button class="startBtn" data-action="start">Start Game</button>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
+
+<!-- User Stories From Site:   
+ User can start the quiz by pressing a button
+ User can see a question with 4 possible answers
+ After selecting an answer, display the next question to the User. Do this until the quiz is finished
+    -At the end, the User can see the following statistics
+    -Time it took to finish the quiz
+    -How many correct answers did he get
+A message showing if he passed or failed the quiz -->

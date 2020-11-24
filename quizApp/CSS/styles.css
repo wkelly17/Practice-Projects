@@ -1,0 +1,131 @@
+/* ==== Basic CSS Reset ==== */
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+/* ==== End CSS Reset ==== */
+:root {
+  --color-primary: hsl(193, 30%, 44%);
+  --color-primary-h: 193;
+  --color-primary-s: 30%;
+  --color-primary-l: 44%;
+  --color-secondary: hsl(349, 52%, 61%);
+  --color-secondary-h: 349;
+  --color-secondary-s: 52%;
+  --color-secondary-l: 61%;
+  --color-black: hsl(0, 0%, 7%);
+  --color-black-h: 0;
+  --color-black-s: 0%;
+  --color-black-l: 7%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.project-container {
+  width: 400px;
+  max-width: calc(100% - 3rem);
+}
+
+@media screen and (min-width: 700px) {
+  .project-container {
+    width: 600px;
+    max-width: calc(100% - 3rem);
+  }
+}
+/* Reminder: the Bootstrap breakpoints are:  Small(576), medium(768), large(992) and xl(1200) */
+
+.quizChoices {
+  display: flex;
+  flex-wrap: wrap;
+}
+.quizChoices li {
+  flex-basis: 45%;
+  margin: 0.5em auto;
+}
+
+.startBtn {
+  display: block;
+  margin: 0 auto;
+  padding: 0.25em 1.25em;
+  background: var(--color-primary);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.answerArea {
+  border: var(--color-primary) solid 1px;
+  cursor: pointer;
+  padding: 0.25em;
+}
+.answerChoice {
+  display: inline-block;
+  width: 90%;
+}
+
+.correct {
+  border: solid hsl(120, 90%, 65%) 2px;
+  background: rgb(9, 172, 9);
+  color: white;
+}
+.incorrect {
+  border: hsl(
+      var(--color-secondary-h),
+      var(--color-secondary-s),
+      calc(var(--color-secondary-l) - 10%)
+    )
+    solid 2px;
+  background: hsl(
+    var(--color-secondary-h),
+    calc(var(--color-secondary-s) + 20%),
+    var(--color-secondary-l)
+  );
+  color: white;
+}
+
+@media screen and (max-width: 800px) {
+  .project-container {
+    width: 600px;
+    max-width: calc(100% - 3rem);
+  }
+  .quizChoices {
+    flex-direction: column;
+  }
+
+  .quizChoices li {
+    flex-basis: 100%;
+    margin: 0.5em 0;
+  }
+}
