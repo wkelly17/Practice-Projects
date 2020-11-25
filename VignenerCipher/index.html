@@ -1,0 +1,55 @@
+<!-- !Florin Pop vigneer cipher project started Tuesday November 24, 2020 03:25PM -->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./CSS/styles.css" />
+    <title>Vigenere Ciper</title>
+  </head>
+  <body>
+	  <h1>Vignere Cipher</h1>
+	  <h2>Read more about a <a href='https://github.com/florinpop17/app-ideas/blob/master/Projects/1-Beginner/Vigenere-Cipher.md'>Vigenere Ciper at this link</a> </h2>
+    <div class="project-container">
+      <div class="encryption-container">
+        <textarea
+          name="EncryptionMessage"
+          id="EncryptionMessage"
+          cols="30"
+		  rows="10"
+		  
+        >
+Have a wonderful Thanksgiving!</textarea
+        >
+      </div>
+      <div class="textControls">
+        <label for="providedKey">
+          Encryption Key <input type="text" value="Thanksgiving" id="providedKey"
+        /></label>
+		<button class="controlBtn encryptBtn">Encrypt</button>
+		<button class="controlBtn decryptBtn">Decrypt</button>
+		<button class="controlBtn clearBtn">Clear Fields</button>
+      </div>
+
+      <div class="decryption-container">
+        <textarea
+          name="decryptionMessage"
+          id="decryptionMessage"
+          cols="30"
+          rows="10"
+        ></textarea
+       
+        
+      </div>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
+
+<!-- A more easy implementation could be to visualize Vigenère algebraically by converting [A-Z] into numbers [0–25]. -->
+
+<!-- Encryption
+The plaintext(P) and key(K) are added modulo 26.
+Ei = (Pi + Ki) mod 26
+
+Decryption
+Di = (Ei - Ki + 26) mod 26 -->
